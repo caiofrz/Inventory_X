@@ -7,10 +7,10 @@ const Line = () => {
       style={{
         height: 1,
         width: "100%",
-        backgroundColor: "#000",
+        backgroundColor: "rgba(0, 0, 0, 0.38)",
         alignSelf: "stretch",
-        marginBottom: 37,
-        marginTop: 29,
+        marginBottom: 15,
+        marginTop: 15,
       }}
     ></View>
   );
