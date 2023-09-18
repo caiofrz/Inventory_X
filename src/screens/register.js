@@ -14,9 +14,6 @@ import {
 const Register = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.head}>
-        <Text style={styles.title}>Cadastre-se</Text>
-      </View>
       <View style={styles.form}>
         <View style={styles.inputView}>
           <User size={24} />
@@ -45,7 +42,7 @@ const Register = () => {
           />
         </View>
         <TouchableOpacity style={styles.button} onPress={() => alert("a")}>
-          <Text style={{ color: "#141414" }}>Cadastrar</Text>
+          <Text style={{ color: "#141414", fontWeight:"bold", fontSize:16 }}>Cadastrar-se</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -56,15 +53,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000",
-  },
-  head: {
-    padding: 40,
-  },
-  title: {
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 20,
-    color: "#FFF",
   },
   form: {
     flex: 1,
@@ -87,11 +75,12 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   button: {
+    justifyContent:"center",
+    alignItems:"center",
     width: "80%",
-    height: 52,
+    height: 42,
     backgroundColor: "#E5E3E3",
     borderRadius: 40,
-    padding: 24,
   },
 });
 
