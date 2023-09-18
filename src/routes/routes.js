@@ -18,7 +18,7 @@ export default function Routes() {
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName="NovaVenda"
+        initialRouteName="Login"
         screenOptions={{
           drawerStyle: {
             backgroundColor: "#D3D2D2",
