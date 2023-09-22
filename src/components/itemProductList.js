@@ -8,7 +8,7 @@ const ItemProduto = ({ item }) => {
         <Text style={styles.itemTitle}>{item.title}</Text>
         <View style={styles.itemContent}>
           <Text style={styles.itemText}>{item.quantity} un</Text>
-          <Text style={styles.itemText}>R${item.value}</Text>
+          <Text style={styles.itemText}>R${item.price}</Text>
         </View>
       </View>
       <View style={{alignSelf:"center"}}>
