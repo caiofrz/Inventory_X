@@ -9,6 +9,8 @@ import {
 import Button from "../components/button";
 import ItemVenda from "../components/itemSaleList";
 import Line from "../components/lineSeparator";
+import { useEffect, useState } from "react";
+
 
 const Vendas = ({navigation}) => {
   const DATA = [
@@ -20,13 +22,13 @@ const Vendas = ({navigation}) => {
     },
     {
       id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bb",
-      clientName: "Cliente 1",
+      clientName: "Cliente 2",
       date: "10/10/2023",
       value: "100,99",
     },
     {
       id: "58694a0f-3da1-471f-bd96-145571e29d72",
-      clientName: "Cliente 1",
+      clientName: "Cliente 3",
       date: "10/10/2023",
       value: "100,99",
     },
@@ -68,6 +70,32 @@ const Vendas = ({navigation}) => {
     },
   ];
 
+  const [search, setSearch] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [Data, setData] = useState([]);
+
+  useEffect(() => {
+        setFilteredData(DATA);
+        setData(DATA);
+  }, []);
+
+  const searchFilter = (text) => {
+    if (text) {
+      const newData = Data.filter(
+        function (item) {
+          if (item.title) {
+            const itemData = item.title.toUpperCase();
+            const textData = text.toUpperCase();
+            return itemData.indexOf(textData) > -1;
+          }
+      });
+      setFilteredData(newData);
+    } else {
+      setFilteredData(Data);
+    }
+    setSearch(text);
+  };
+
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
@@ -78,11 +106,13 @@ const Vendas = ({navigation}) => {
             placeholder="Pesquisar"
             placeholderTextColor="#000"
             inputMode="text"
+            onChangeText={(text) => searchFilter(text)}
+            value={search}
           />
         </View>
         <ScrollView style={styles.list}>
           <FlatList
-            data={DATA}
+            data={filteredData}
             renderItem={({ item }) => <ItemVenda item={item} />}
             keyExtractor={(item) => item.id}
             ItemSeparatorComponent={<Line />}
