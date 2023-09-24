@@ -139,7 +139,7 @@ const Produtos = ({ navigation }) => {
           />
         </View>
       </View>
-      <View style={{ position: "absolute", bottom: -5, width: "80%" }}>
+      <View style={{ position: "absolute", bottom: -15, width: "80%" }}>
         <Button
           buttonTitle={"+ Novo produto"}
           onPress={() => navigation.jumpTo("NovoProduto")}

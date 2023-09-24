@@ -1,76 +1,74 @@
-import React, {useState} from 'react';
-import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
+import { Pencil, Trash } from "phosphor-react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Line from "./lineSeparator";
 
-const Modal = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  
+
+const ItemModal = ({ item }) => {
   return (
-    <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
-          </View>
+    <View style={styles.containerModal}>
+      <Text style={styles.itemTitleModal}>{item.title}</Text>
+      <View style={styles.itensModal}>
+        <View style={styles.itemModal}>
+          <Text style={styles.itemTitle}>Código</Text>
+          <Text style={styles.itemTitle}>{item.id}</Text>
         </View>
-      </Modal>
+        <Line />
+        <View style={styles.itemModal}>
+          <Text style={styles.itemTitle}>Estoque</Text>
+          <Text style={styles.itemTitle}>{item.quantity}</Text>
+        </View>
+        <Line />
+        <View style={styles.itemModal}>
+          <Text style={styles.itemTitle}>Custo Unitário</Text>
+          <Text style={styles.itemTitle}>R${item.coast}</Text>
+        </View>
+        <Line />
+        <View style={styles.itemModal}>
+          <Text style={styles.itemTitle}>Preço de venda</Text>
+          <Text style={styles.itemTitle}>R${item.price}</Text>
+        </View>
+        <Line />
+        <View style={styles.itemModal}>
+          <TouchableOpacity style={styles.icon}>
+            <Trash size={30} />
+            <Text>Excluir</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.icon}>
+            <Pencil size={30} />
+            <Text>Atualizar</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
+
+  itemTitle: {
+    fontWeight: "bold",
+    fontSize: 18,
   },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+  containerModal: {
+    width: "80%",
+    gap: 14,
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
+  itensModal: {
+    gap: 14,
   },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
+  itemTitleModal: {
+    alignSelf: "center",
+    fontWeight: "bold",
+    fontSize: 20,
+    padding: 15,
   },
-  buttonClose: {
-    backgroundColor: '#2196F3',
+  itemModal: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
+  icon: {
+    alignItems: "center",
   },
 });
 
-export default Modal;
+export default ItemModal;
