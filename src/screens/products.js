@@ -1,12 +1,7 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { MagnifyingGlass } from "phosphor-react-native";
 import { useEffect, useState } from "react";
-import {
-  FlatList,
-  StyleSheet,
-  TextInput,
-  View
-} from "react-native";
+import { FlatList, StyleSheet, TextInput, View } from "react-native";
 import Button from "../components/button";
 import ItemProduto from "../components/itemProductList";
 import Line from "../components/lineSeparator";
@@ -78,17 +73,27 @@ const Produtos = ({ navigation }) => {
   useEffect(() => {
     loadItens();
   }, []);
-  
+
+
   const loadItens = async () => {
     try {
-      const DATA = await getDocs(collection(db, "produtos"));
-      const newItens = [];
-      DATA.forEach((doc) => {
-        const newProduct = productConverter.fromFirestore(doc);
-        newItens.push(newProduct);
+      // const DATA = await getDocs(collection(db, "produtos"));
+      // const newItens = [];
+      // DATA.forEach((doc) => {
+      //   const newProduct = productConverter.fromFirestore(doc);
+      //   newItens.push(newProduct);
+      // });
+      // setFilteredData(newItens);
+      // setData(newItens);
+      const unsub = onSnapshot(collection(db, "produtos"), (DATA) => {
+        const newItens = [];
+        DATA.forEach((doc) => {
+          const newProduct = productConverter.fromFirestore(doc);
+          newItens.push(newProduct);
+        });
+        setFilteredData(newItens);
+        setData(newItens);
       });
-      setFilteredData(newItens);
-      setData(newItens);
     } catch (error) {
       alert("Não foi possível carregar os itens!");
       console.log(error);

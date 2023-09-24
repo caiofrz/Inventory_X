@@ -1,6 +1,6 @@
 class Product {
     constructor (id, title, coast, price, quantity ) {
-        this.id = parseInt(id);
+        this.id = id;
         this.title = title;
         this.coast = parseFloat(coast),
         this.price = parseFloat(price),

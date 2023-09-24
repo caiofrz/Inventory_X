@@ -1,6 +1,6 @@
 import { doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import Input from "../components/Input";
 import Button from "../components/button";
 import { db } from "../config/firebase";
@@ -9,14 +9,15 @@ import { Product, productConverter } from "../model/Product";
 const NovoProduto = ({ navigation }) => {
   const [product, setProduct] = useState();
 
-  const handleProduct = async () => {
+  const handleProductSubmit = async () => {
     try {
+      checkValidateInput();
       const productRef = doc(db, "produtos", product.id)
                         .withConverter(productConverter);
       await setDoc(
         productRef,
         new Product(
-          parseInt(product.id),
+          product.id,
           product.title,
           parseFloat(product.coast),
           parseFloat(product.price),
@@ -46,10 +47,32 @@ const NovoProduto = ({ navigation }) => {
   const handleQuantity = (quantity) => {
     setProduct((prev) => ({ ...prev, quantity }));
   };
-
+  
+  const checkValidateInput = () => {
+    if (!product.id.trim()) {
+      alert('Código do produto precisa ser informado!');
+      return new Error('Código do produto precisa ser informado!');
+    }
+    if (!product.title.trim()) {
+      alert('Nome do produto precisa ser informado!');
+      return new Error('Nome do produto precisa ser informado!');
+    }
+    if (!product.coast.trim()) {
+      alert('Custo unitário do produto precisa ser informado!');
+      return new Error('Custo unitário do produto precisa ser informado!');
+    }
+    if (!product.price.trim()) {
+      alert('Preço do produto precisa ser informado!');
+      return new Error('Preço do produto precisa ser informado!');
+    }
+    if (!product.quantity.trim()) {
+      alert('Quantidade do produto precisa ser informado!');
+      return new Error('Quantidade do produto precisa ser informado!');
+    }
+  };
   return (
     <View style={styles.screen}>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View>
           <Input
             title={"Nome do produto"}
@@ -91,8 +114,8 @@ const NovoProduto = ({ navigation }) => {
           />
         </View>
 
-        <Button buttonTitle={"Cadastrar produto"} onPress={handleProduct} />
-      </View>
+        <Button buttonTitle={"Cadastrar produto"} onPress={handleProductSubmit} />
+      </ScrollView>
     </View>
   );
 };
