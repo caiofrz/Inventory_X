@@ -1,18 +1,35 @@
+import { deleteDoc, doc } from "firebase/firestore";
 import { Pencil, Trash } from "phosphor-react-native";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Line from "./lineSeparator";
-import { doc, deleteDoc } from "firebase/firestore";
+import {
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { db } from "../config/firebase";
+import Line from "./lineSeparator";
 
-const ItemVendaModal = ({ item }) => {
+const ItemVendaModal = ({ item, navigation }) => {
   const deleteSale = async () => {
     await deleteDoc(doc(db, "vendas", item.id));
   };
 
   return (
-    <View style={styles.containerModal}>
+    <ScrollView style={styles.containerModal}>
       <Text style={styles.itemTitleModal}>{item.clientName}</Text>
       <View style={styles.itensModal}>
+        <View style={styles.itemModal}>
+          <TouchableOpacity style={styles.icon} onPress={deleteSale}>
+            <Trash size={30} />
+            <Text>Excluir</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.icon}>
+            <Pencil size={30} />
+            <Text>Atualizar</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.itemModal}>
           <Text style={styles.itemTitle}>Data da venda</Text>
           <Text style={styles.itemTitle}>{item.date}</Text>
@@ -28,23 +45,23 @@ const ItemVendaModal = ({ item }) => {
           <Text style={styles.itemTitle}>R${item.value}</Text>
         </View>
         <Line />
-        {/* <View style={styles.itemModal}>
-          <Text style={styles.itemTitle}>Preço de venda</Text>
-          <Text style={styles.itemTitle}>R${item.price}</Text>
-        </View>
-        <Line /> */}
         <View style={styles.itemModal}>
-          <TouchableOpacity style={styles.icon} onPress={deleteSale}>
-            <Trash size={30} />
-            <Text>Excluir</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.icon}>
-            <Pencil size={30} />
-            <Text>Atualizar</Text>
-          </TouchableOpacity>
+          <Text style={styles.itemTitle}>Itens</Text>
+          <View>
+            <FlatList
+              data={item.itens}
+              renderItem={({ item }) => (
+                <Text style={{fontSize: 16, padding: 2 }}>
+                  {item.label}
+                </Text>
+              )}
+              keyExtractor={(item) => item.value}
+            />
+          </View>
         </View>
+        <Line />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -69,6 +86,10 @@ const styles = StyleSheet.create({
   itemModal: {
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  itemModalItens: {
+    alignItems: "center",
+    gap: 5,
   },
   icon: {
     alignItems: "center",

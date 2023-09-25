@@ -77,14 +77,6 @@ const Produtos = ({ navigation }) => {
 
   const loadItens = async () => {
     try {
-      // const DATA = await getDocs(collection(db, "produtos"));
-      // const newItens = [];
-      // DATA.forEach((doc) => {
-      //   const newProduct = productConverter.fromFirestore(doc);
-      //   newItens.push(newProduct);
-      // });
-      // setFilteredData(newItens);
-      // setData(newItens);
       const unsub = onSnapshot(collection(db, "produtos"), (DATA) => {
         const newItens = [];
         DATA.forEach((doc) => {

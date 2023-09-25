@@ -2,6 +2,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import * as React from "react";
 import "react-native-gesture-handler";
+import AddItens from "../screens/addItens";
 import Dashboard from "../screens/dashboard";
 import Home from "../screens/home";
 import Login from "../screens/login";
@@ -10,7 +11,6 @@ import NovaVenda from "../screens/newSale";
 import Produtos from "../screens/products";
 import Register from "../screens/register";
 import Vendas from "../screens/sales";
-import AddItens from "../screens/addItens";
 
 const Drawer = createDrawerNavigator();
 
@@ -53,6 +53,12 @@ export default function Routes() {
           name="Login"
           component={Login}
           options={{
+            headerLeftContainerStyle:{
+              display: "none",
+            },
+            headerTitleContainerStyle:{
+              marginLeft: "38%"
+            },
             drawerItemStyle: {
               display: "none",
             },

@@ -16,6 +16,18 @@ const ItemProdutoModal = ({ item }) => {
     <View style={styles.containerModal}>
       <Text style={styles.itemTitleModal}>{item.title}</Text>
       <View style={styles.itensModal}>
+      <View style={styles.itemModal}>
+          <TouchableOpacity 
+          style={styles.icon}
+          onPress={deleteProduct}>
+            <Trash size={30} />
+            <Text>Excluir</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.icon}>
+            <Pencil size={30} />
+            <Text>Atualizar</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.itemModal}>
           <Text style={styles.itemTitle}>Código</Text>
           <Text style={styles.itemTitle}>{item.id}</Text>
@@ -36,18 +48,6 @@ const ItemProdutoModal = ({ item }) => {
           <Text style={styles.itemTitle}>R${item.price}</Text>
         </View>
         <Line />
-        <View style={styles.itemModal}>
-          <TouchableOpacity 
-          style={styles.icon}
-          onPress={deleteProduct}>
-            <Trash size={30} />
-            <Text>Excluir</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.icon}>
-            <Pencil size={30} />
-            <Text>Atualizar</Text>
-          </TouchableOpacity>
-        </View>
       </View>
     </View>
   );

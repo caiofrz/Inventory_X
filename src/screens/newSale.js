@@ -8,7 +8,7 @@ import Line from "../components/lineSeparator";
 import { db } from "../config/firebase";
 import { Sale, saleConverter } from "../model/Sale";
 
-const NovaVenda = ({ navigation }) => {
+const NovaVenda = ({ navigation, route }) => {
   const [sale, setSale] = useState();
   const [paymentMethod, setPaymentMethod] = useState();
   const paymentMethodsOptions = [
@@ -31,7 +31,7 @@ const NovaVenda = ({ navigation }) => {
           new Date().getTime(),
           parseFloat(sale.value),
           paymentMethod,
-          sale.itens
+          route.params.paramKey
         )
       );
       alert("Venda cadastrada!");
@@ -49,6 +49,7 @@ const NovaVenda = ({ navigation }) => {
   const handleValue = (value) => {
     setSale((prev) => ({ ...prev, value }));
   };
+
 
   const checkValidateInput = () => {
     if (!sale.clientName.trim()) {

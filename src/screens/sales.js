@@ -16,62 +16,6 @@ import { saleConverter } from "../model/Sale";
 
 
 const Vendas = ({navigation}) => {
-  // const DATA = [
-  //   {
-  //     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-  //     clientName: "Cliente 1",
-  //     date: "10/10/2023",
-  //     value: "100,99",
-  //   },
-  //   {
-  //     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bb",
-  //     clientName: "Cliente 2",
-  //     date: "10/10/2023",
-  //     value: "100,99",
-  //   },
-  //   {
-  //     id: "58694a0f-3da1-471f-bd96-145571e29d72",
-  //     clientName: "Cliente 3",
-  //     date: "10/10/2023",
-  //     value: "100,99",
-  //   },
-  //   {
-  //     id: "58694a0f-3da1-471f-bd96-145571e29d73",
-  //     clientName: "Cliente 1",
-  //     date: "10/10/2023",
-  //     value: "100,99",
-  //   },
-  //   {
-  //     id: "58694a0f-3da1-471f-bd96-145571e29d74",
-  //     clientName: "Cliente 1",
-  //     date: "10/10/2023",
-  //     value: "100,99",
-  //   },
-  //   {
-  //     id: "58694a0f-3da1-471f-bd96-145571e29d75",
-  //     clientName: "Cliente 1",
-  //     date: "10/10/2023",
-  //     value: "100,99",
-  //   },
-  //   {
-  //     id: "58694a0f-3da1-471f-bd96-145571e29d76",
-  //     clientName: "Cliente 1",
-  //     date: "10/10/2023",
-  //     value: "100,99",
-  //   },
-  //   {
-  //     id: "58694a0f-3da1-471f-bd96-145571e29d77",
-  //     clientName: "Cliente 1",
-  //     date: "10/10/2023",
-  //     value: "100,99",
-  //   },
-  //   {
-  //     id: "58694a0f-3da1-471f-bd96-145571e29d78",
-  //     clientName: "Cliente 1",
-  //     date: "10/10/2023",
-  //     value: "100,99",
-  //   },
-  // ];
 
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -83,14 +27,6 @@ const Vendas = ({navigation}) => {
 
   const loadItens = async () => {
     try {
-      // const DATA = await getDocs(collection(db, "produtos"));
-      // const newItens = [];
-      // DATA.forEach((doc) => {
-      //   const newProduct = productConverter.fromFirestore(doc);
-      //   newItens.push(newProduct);
-      // });
-      // setFilteredData(newItens);
-      // setData(newItens);
       const unsub = onSnapshot(collection(db, "vendas"), (DATA) => {
         const newItens = [];
         DATA.forEach((doc) => {

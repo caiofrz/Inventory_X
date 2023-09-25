@@ -27,7 +27,6 @@ const Login = ({ navigation }) => {
         alert("Não possível autenticar");
         console.log(error);
       });
-      // navigation.navigate("Home");
   };
 
   const handleEmail = (email) => {
