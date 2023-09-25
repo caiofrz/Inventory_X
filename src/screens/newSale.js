@@ -1,4 +1,4 @@
-import { Timestamp, collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import DropdownSelect from "react-native-input-select";
@@ -9,7 +9,6 @@ import { db } from "../config/firebase";
 import { Sale, saleConverter } from "../model/Sale";
 
 const NovaVenda = ({ navigation }) => {
-  // const [date, setDate] = useState(new Date());
   const [sale, setSale] = useState();
   const [paymentMethod, setPaymentMethod] = useState();
   const paymentMethodsOptions = [
@@ -27,6 +26,7 @@ const NovaVenda = ({ navigation }) => {
       await setDoc(
         saleRef,
         new Sale(
+          sale.id,
           sale.clientName,
           new Date().getTime(),
           parseFloat(sale.value),
@@ -73,11 +73,6 @@ const NovaVenda = ({ navigation }) => {
           />
         </View>
         <View>
-          {/* <Input
-            title={"Data da venda"}
-            placeholder="Digite aqui..."
-            inputMode="text"
-          /> */}
           {/* <DatePicker
             format={"DD/MM/YYYY"}
             date={date}
@@ -97,11 +92,6 @@ const NovaVenda = ({ navigation }) => {
           />
         </View>
         <View>
-          {/* <Input
-            title={"Forma de pagamento"}
-            placeholder="R$"
-            inputMode="decimal"
-          /> */}
           <Text style={styles.title}>Forma de pagamento</Text>
           <DropdownSelect
             placeholder="Forma de pagamento.."

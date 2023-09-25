@@ -1,6 +1,7 @@
 
 class Sale {
-    constructor (clientName, date, value, paymentMethod, itens=[] ) {
+    constructor (id, clientName, date, value, paymentMethod, itens=[] ) {
+        this.id = id;
         this.clientName = clientName;
         this.date = date,
         this.value = parseFloat(value),
@@ -25,7 +26,7 @@ const saleConverter = {
     },
     fromFirestore: (snapshot, options) => {
         const data = snapshot.data(options);
-        return new Sale(data.clientName, new Date(data.date).toLocaleDateString("pt-BR"), data.value, data.paymentMethod, data.itens);
+        return new Sale(snapshot.id,data.clientName, new Date(data.date).toLocaleDateString("pt-BR"), data.value, data.paymentMethod, data.itens);
     }
 };
 
