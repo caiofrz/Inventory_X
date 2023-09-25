@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Line from "./lineSeparator";
 
 
-const ItemModal = ({ item }) => {
+const ItemProdutoModal = ({ item }) => {
   return (
     <View style={styles.containerModal}>
       <Text style={styles.itemTitleModal}>{item.title}</Text>
@@ -71,4 +71,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ItemModal;
+export default ItemProdutoModal;
