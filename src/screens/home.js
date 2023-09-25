@@ -21,7 +21,6 @@ const Home = () => {
         DATA.forEach((doc) => {
           setTotalProducts((prev) => parseInt(prev + doc.data().quantity));
           setTotalProductsValue((prev) => prev + (doc.data().quantity * doc.data().price));
-          console.log(totalProductsValue);
           });
         });
         const sales = onSnapshot(collection(db, "vendas"), (DATA) => {

@@ -32,7 +32,6 @@ const Vendas = ({navigation}) => {
         DATA.forEach((doc) => {
           const newSale = saleConverter.fromFirestore(doc);
           newItens.push(newSale);
-          console.log(newSale.id);
         });
         setFilteredData(newItens);
         setData(newItens);
