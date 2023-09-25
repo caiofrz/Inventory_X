@@ -1,9 +1,14 @@
 import { Pencil, Trash } from "phosphor-react-native";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Line from "./lineSeparator";
-
+import { doc, deleteDoc } from "firebase/firestore";
+import { db } from "../config/firebase";
 
 const ItemVendaModal = ({ item }) => {
+  const deleteSale = async () => {
+    await deleteDoc(doc(db, "vendas", item.id));
+  };
+
   return (
     <View style={styles.containerModal}>
       <Text style={styles.itemTitleModal}>{item.clientName}</Text>
@@ -29,7 +34,7 @@ const ItemVendaModal = ({ item }) => {
         </View>
         <Line /> */}
         <View style={styles.itemModal}>
-          <TouchableOpacity style={styles.icon}>
+          <TouchableOpacity style={styles.icon} onPress={deleteSale}>
             <Trash size={30} />
             <Text>Excluir</Text>
           </TouchableOpacity>
@@ -44,7 +49,6 @@ const ItemVendaModal = ({ item }) => {
 };
 
 const styles = StyleSheet.create({
-
   itemTitle: {
     fontWeight: "bold",
     fontSize: 18,
