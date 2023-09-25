@@ -1,5 +1,7 @@
 import { CaretRight } from "phosphor-react-native";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import RBSheet from "react-native-raw-bottom-sheet";
+import ItemVendaModal from "./itemSaleModal";
 
 const ItemVenda = ({ item }) => {
   return (
@@ -11,9 +13,28 @@ const ItemVenda = ({ item }) => {
           <Text style={styles.itemText}>R${item.value}</Text>
         </View>
       </View>
-      <View style={{alignSelf:"center"}}>
-        <CaretRight size={24} />
-      </View> 
+      <View style={{ alignSelf: "center" }}>
+        <TouchableOpacity onPress={() => this[RBSheet + item].open()}>
+          <CaretRight size={24} />
+        </TouchableOpacity>
+
+        <RBSheet
+          ref={(ref) => {
+            this[RBSheet + item] = ref;
+          }}
+          height={474}
+          openDuration={250}
+          customStyles={{
+            container: {
+              borderTopRightRadius: 20,
+              borderTopLeftRadius: 20,
+              alignItems: "center",
+            },
+          }}
+        >
+          <ItemVendaModal item={item} />
+        </RBSheet>
+      </View>
     </View>
   );
 };
@@ -36,6 +57,26 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 18,
+  },
+  containerModal: {
+    width: "80%",
+    gap: 14,
+  },
+  itensModal: {
+    gap: 14,
+  },
+  itemTitleModal: {
+    alignSelf: "center",
+    fontWeight: "bold",
+    fontSize: 20,
+    padding: 15,
+  },
+  itemModal: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  icon: {
+    alignItems: "center",
   },
 });
 

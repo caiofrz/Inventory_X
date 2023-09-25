@@ -1,26 +1,65 @@
+import { Timestamp, collection, doc, setDoc } from "firebase/firestore";
+import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import DropdownSelect from "react-native-input-select";
 import Input from "../components/Input";
 import Button from "../components/button";
 import Line from "../components/lineSeparator";
-import DatePicker from "react-native-date-picker";
-import { useState } from "react";
-import DropdownSelect from "react-native-input-select";
+import { db } from "../config/firebase";
+import { Sale, saleConverter } from "../model/Sale";
 
 const NovaVenda = ({ navigation }) => {
-  const [date, setDate] = useState({ date: "" });
-
-  const changeDate = (valor) => {
-    setDate({ date: valor });
-  };
-
+  // const [date, setDate] = useState(new Date());
+  const [sale, setSale] = useState();
   const [paymentMethod, setPaymentMethod] = useState();
-
   const paymentMethodsOptions = [
     { label: "Cartão Débito", value: "Debito" },
     { label: "Cartão Crédito", value: "Credito" },
     { label: "Dinheiro", value: "Dinheiro" },
     { label: "Pix", value: "Pix" },
   ];
+
+  const handleSaleSubmit = async () => {
+    try {
+      checkValidateInput();
+      const saleRef = doc(collection(db, "vendas"))
+                        .withConverter(saleConverter);
+      await setDoc(
+        saleRef,
+        new Sale(
+          sale.clientName,
+          new Date().getTime(),
+          parseFloat(sale.value),
+          paymentMethod,
+          sale.itens
+        )
+      );
+      alert("Venda cadastrada!");
+      navigation.jumpTo("Vendas");
+    } catch (error) {
+      alert("Venda não cadastrada!\nDados Inválidos!");
+      console.log(error);
+    }
+  };
+
+
+  const handleClientName = (clientName) => {
+    setSale((prev) => ({ ...prev, clientName }));
+  };
+  const handleValue = (value) => {
+    setSale((prev) => ({ ...prev, value }));
+  };
+
+  const checkValidateInput = () => {
+    if (!sale.clientName.trim()) {
+      alert('Nome do cliente precisa ser informado!');
+      return new Error('Nome do cliente precisa ser informado!');
+    }
+    if (!sale.value.trim()) {
+      alert('Valor da venda precisa ser informado!');
+      return new Error('Valor da venda precisa ser informado!');
+    }
+  };
 
   return (
     <View style={styles.screen}>
@@ -30,22 +69,32 @@ const NovaVenda = ({ navigation }) => {
             title={"Nome do cliente"}
             placeholder="Digite aqui..."
             inputMode="text"
+            onChangeText={handleClientName}
           />
         </View>
         <View>
-          <Input
+          {/* <Input
             title={"Data da venda"}
             placeholder="Digite aqui..."
             inputMode="text"
-          />
+          /> */}
           {/* <DatePicker
             format={"DD/MM/YYYY"}
-            date={date.date}
-            onDateChange={changeDate}
+            date={date}
+            onDateChange={handleDate}
           /> */}
+          {/* <DatePicker 
+          mode="date"
+          date={date} 
+          onDateChange={handleDate} /> */}
         </View>
         <View>
-          <Input title={"Valor"} placeholder="R$" inputMode="decimal" />
+          <Input 
+          title={"Valor"} 
+          placeholder="R$" 
+          inputMode="decimal" 
+          onChangeText={handleValue}
+          />
         </View>
         <View>
           {/* <Input
@@ -59,7 +108,7 @@ const NovaVenda = ({ navigation }) => {
             dropdownStyle={{
               height: 20,
               borderWidth: 0,
-              backgroundColor: "#E5E3E3"
+              backgroundColor: "#E5E3E3",
             }}
             options={paymentMethodsOptions}
             selectedValue={paymentMethod}
@@ -79,7 +128,7 @@ const NovaVenda = ({ navigation }) => {
 
         <Button
           buttonTitle={"Cadastrar venda"}
-          onPress={() => navigation.jumpTo("Vendas")}
+          onPress={handleSaleSubmit}
         />
       </View>
     </View>
